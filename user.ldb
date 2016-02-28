@@ -1,0 +1,28 @@
+return {
+	["Joshua Astray"]	= {
+		["best"]	= 0.26,
+		["nick"]	= "Joshua",
+	},
+	["list"]	= {
+		[1]	= {
+			["time"]	= 0.26,
+			["nick"]	= "Joshua",
+		},
+		[2]	= {
+			["time"]	= 0.27000000000001,
+			["nick"]	= "Joshua",
+		},
+		[4]	= {
+			["time"]	= 0.291,
+			["nick"]	= "Joshua",
+		},
+		[3]	= {
+			["time"]	= 0.281,
+			["nick"]	= "Joshua",
+		},
+		[5]	= {
+			["time"]	= 0.31,
+			["nick"]	= "Joshua",
+		},
+	},
+}
