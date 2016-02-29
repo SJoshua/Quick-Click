@@ -7,9 +7,10 @@ require("lcon")
 require("socket")
 require("cjson")
 require("coding")
+require("blink")
 
 local host = coding.debase64("THVhQ0MuNTRkZi5uZXQ=")
-local port = tonumber(coding.debase64("MTUzNzQ="))
+local port = tonumber(coding.debase64("MTUzNzU="))
 local cnet = true
 
 local lcos = {
@@ -82,10 +83,13 @@ end
 function wtime(t)
 	while t > 0 do
 		cwrite(lcos.bwhite, "\r\t\t\t\t", t)
-		socket.sleep(1)
+		if t ~= 0 then
+			blink.rand(1, 1000)	
+		end
 		t = t - 1
 	end
 	cwrite(lcos.lred, "\r\t\t\t\tStart!\n")
+	blink.on(300)
 end
 
 function clean_enter()
@@ -206,7 +210,7 @@ end
 
 function main(login)
 	if not login then
-		cwrite(lcos.gray, "\t\t\t  ===  Quick Click  === \n\n")
+		cwrite(lcos.gray, "\t\t  ===  Quick Click with Blink  === \n\n")
 		cwrite(lcos.bwhite, "\t Please enter your ID: ")
 		local id = io.read(20, false, 5):gsub("%c","")
 		local res = send({type = "assert", id = id}, true)
@@ -224,7 +228,7 @@ function main(login)
 		end
 		cls()
 	end
-	cwrite(lcos.gray, "\t\t\t  ===  Quick Click  === \n\n")
+	cwrite(lcos.gray, "\t\t  ===  Quick Click with Blink === \n\n")
 	cwrite(lcos.bwhite, "\t Are you ready? \n\n")
 	cwrite(lcos.lsgreen, "\t\t\t   > Yes, I'm ready!")
 	wait()
@@ -232,7 +236,7 @@ function main(login)
 	io.write("\t\t    Press ")
 	cwrite(lcos.lsgreen, "[Enter]")
 	io.write(" when you see ")
-	cwrite(lcos.lred, "[!]")
+	cwrite(lcos.lred, "[red]")
 	io.write(".\n\n\n")
 	wtime(3)
 	io.write("\n\t\t\t")
@@ -240,7 +244,6 @@ function main(login)
 	local wait_time = math.random(4.01,10.01)
 	local times = 0
 	while wait_time > 0 do
-		io.write(times % 4 == 0 and " " or ".")
 		times = times+1
 		local sleep_time = math.random(0.49,1.01)
 		socket.sleep(sleep_time)
@@ -249,7 +252,8 @@ function main(login)
 			wait_time = wait_time + math.random(1,2.5)
 		end
 	end
-	cwrite(lcos.lred, "!")
+	cwrite(lcos.lred, "click now! ... ")
+	blink.red(0)
 	local point = 0
 	local start_time = os.clock()
 	while true do
@@ -260,7 +264,9 @@ function main(login)
 			point = point+1
 		end
 	end
+	cwrite(lcos.lsgreen, "... !")
 	local qctime = os.clock() - start_time
+	blink.rgb(qctime < 0.145 and (0.145 - qctime) * 1000 or 0, (4 - qctime) * 1000 , qctime > 0.4 and (qctime - 0.4) * 1000 or 0)
 	cwrite(lcos.yellow, "\n\n\t\t\t    your point: ", point, "\n\t\t\t    your time : ", qctime, "\n")
 	if cnet then
 		local list = send({type = "pushpoint", time = qctime, id = userid}, true)
